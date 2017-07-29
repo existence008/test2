@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body,html{ height: 100%;}
+			*{ padding: 0; margin: 0; list-style: none;}
+			.box{ margin: 100px 0 0 400px;}
+			#face{ display: block; text-decoration: none; color: #333; padding: 5px 0;}
+			.panel{width: 450px; height: auto; border: 1px solid #E5E5E5; overflow: hidden; display: none;}
+			.loading{ padding: 5px 0; text-align: center; }
+			/*.loading,.box ul{ width: 450px; height: auto; border: 1px solid #E5E5E5; overflow: hidden;}*/
+			.box ul li{ width: 75px; height: 75px; float: left; cursor: pointer; margin-bottom: 5px;}
+			.box ul li img{ width: 75px; height: 75px;}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<a href="javascript:;" id="face">表情</a>
+			<div class="panel">
+				<p class="loading">正在加载中，请稍等...</p>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/jquery.js" ></script>
+		<script type="text/javascript" src="js/perload.js" ></script>
+		<script type="text/javascript">
+			var $face=$('#face'),
+				$panel=$('.panel');
+			var imgs=['images/qq/00.gif','images/qq/01.gif','images/qq/02.gif','images/qq/03.gif','images/qq/04.gif','images/qq/05.gif',
+			'images/qq/06.gif','images/qq/07.gif','images/qq/08.gif','images/qq/09.gif','images/qq/10.gif','images/qq/11.gif','images/qq/12.gif',
+			'images/qq/13.gif'];
+//				for(var i=0; i<14; i++){
+//					imgs[i]='./images/qq/'+i+'gif';
+//				}
+				var length=imgs.length;
+				$face.on('click',function(e){
+					e.stopPropagation();
+					$panel.show();
+					$.PreLoad(imgs,{
+						all:function(){
+							var html='';
+							html+='<ul>';
+							for(var i=0; i<length;i++){
+								html+='<li><img src="'+imgs[i]+'" alt=""/></li>';
+							}
+							html+='</ul>';
+							$panel.html(html)
+						}
+					})
+				});
+				$(document).on('click', function() {
+			      $panel.click(function() {
+			        return false;
+			      })
+			      $panel.hide();
+			   	});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>全选、反选</title>
+	</head>
+	<body>
+		<form>
+			<input type="checkbox" name="" id="all" onclick="selectAll();" />全选<br />
+			<hr /><br />
+			<input class="chk" type="checkbox" name="chk" onclick="selectSingle();" />菜单一<br /><br />
+			<input class="chk" type="checkbox" name="chk" onclick="selectSingle();" />菜单二<br /><br />
+			<input class="chk" type="checkbox" name="chk" onclick="selectSingle();" />菜单三<br /><br />
+			<input class="chk" type="checkbox" name="chk" onclick="selectSingle();" />菜单四<br /><br />
+		</form>
+		<!--<script type="text/javascript" src="js/jquery.js" ></script>-->
+		<!--<script type="text/javascript">
+			var select_all=true;
+			$(function(){
+				$('.chk').each(function(){
+					if(!$(this).attr('checked')){
+						select_all=false;
+						return false;
+					}
+				});	
+			})
+			if(select_all){
+				$('#all').prop('checked',true);
+			}else{
+				$('#all').prop('checked',false);
+			}
+		</script>-->
+		<script type="text/javascript" >
+			function selectAll(){
+				var dom=document.getElementById('all');
+				var doms=document.getElementsByName('chk');
+				for(var i=0;i<doms.length;i++){
+					if(dom.checked){
+						doms[i].checked=true;
+					}else{
+						doms[i].checked=false;
+					};
+				}
+			};
+			function selectSingle(){
+				var dom=document.getElementById('all');
+				var doms=document.getElementsByName('chk');
+				for(var i=0;i<doms.length;i++){
+					if(dom.checked){
+						for(var i=0;i<doms.length;i++){
+							if(doms[i].checked==false){
+								dom.checked=false;
+							}
+						}
+					}else{
+						if(dom.checked==true&&doms[i].checked==true){
+							dom.checked=true;		
+						}
+					};
+				}
+			}
+		</script>
+	</body>
+</html>

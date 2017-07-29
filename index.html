@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>图片轮播</title>
+		<style type="text/css">
+			*{padding:0; margin:0; list-style: none;}
+			.carousel-div{ position: relative; height: 100%; overflow: hidden;}
+			.item-pic{ position: absolute; z-index: 1;}
+			.btn{ display: block; position: absolute; width: 50px; height: 80px; background: rgba(0,0,0,.5); color: #fff; text-align: center; 
+			line-height: 80px; z-index: 2; top: 50%; margin-top: -40px; font-size: 30px;}
+			.btn-prev{ left: 0;}
+			.btn-next{right: 0;}
+			.radius{ position: absolute; bottom: 15px; display: table; margin: 0 auto; z-index: 3;}
+			.radius li{ width: 15px; height: 15px; border-radius: 50%; background: cornflowerblue; float: left; cursor: pointer;}
+			.radius li.on{ background: red;}
+		</style>
+	</head>
+	<body>
+		<div class="carousel-div">
+			<span class="btn btn-prev">&lt</span>
+			<div class="item-pic"><a href="#"><img src="images/banner0.jpg"/></a></div>
+			<div class="item-pic"><a href="#"><img src="images/banner1.jpg"/></a></div>
+			<div class="item-pic"><a href="#"><img src="images/banner2.jpg"/></a></div>
+			<div class="item-pic"><a href="#"><img src="images/banner0.jpg"/></a></div>
+			<span class="btn btn-next">&gt</span>
+			<ul class="radius">
+				<li class="on"></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			
+		</div>
+		
+		<script type="text/javascript" src="js/jquery.js" ></script>
+		<script type="text/javascript">
+			$('.carousel-div').height($(window).height());
+			var i=0;
+			var timer;
+			$(function(){
+				$('.item-pic').eq(0).show().siblings('div').hide();
+				showTime();
+				$('.radius li').hover(function(){
+					i=$(this).index();
+					show();
+					clearInterval(timer);
+				},function(){
+					showTime();
+				});
+				
+				$('.btn-prev').click(function(){
+					clearInterval(timer);
+					if(i==0){
+						i=4;
+					}
+					i--;
+					show();
+					showTime();
+				});
+				$('.btn-next').click(function(){
+					clearInterval(timer);
+					if(i==3){
+						i=-1;
+					}
+					i++;
+					show();
+					showTime();
+				});
+				
+			});
+			
+			function show(){
+				$('.item-pic').eq(i).show().siblings('div').hide();
+				$('.radius li').eq(i).addClass('on').siblings().removeClass('on');
+			};
+			function showTime(){
+				timer=setInterval(function(){
+					i++;
+					if(i==5){
+						i=0;
+					}
+					show();
+				},3000);
+			};
+		</script>
+	</body>
+</html>

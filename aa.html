@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body {font-family:Arial, Helvetica, sans-serif; background:#fff; font-size:11px;}
+			.warp {position:absolute; top:50%; left:50%; width:220px; height:220px; margin:-110px 0 0 -110px; background: #eee; }
+			ul.imgBox, ul.imgBox li {display:block; list-style:none; padding:0; margin:0; }
+			.warp ul li {position:absolute; top:0; left:0; padding:10px; width:auto; height:auto; background: #fff;border: 1px solid #ccc;
+			transition: all 1s; z-index: 1;}
+			.warp ul li:hover{-webkit-transform: rotate(0deg)scale(1.1); -moz-transform: rotate(0deg)scale(1.1);
+			transform: rotate(0deg)scale(1.1); box-shadow: 0 0 15px #999; z-index: 2;}
+			/*.warp ul li img{width: 100%;}*/
+		</style>
+	</head>
+	<body>
+		<div class="warp">
+			<ul class="imgBox"></ul>
+		</div>
+		
+		<script type="text/javascript" src="js/jquery.js" ></script>
+		<script type="text/javascript">
+			$(function() {
+				var img_list = ['images/mm/mm1.jpg','images/mm/mm2.jpg','images/mm/mm3.jpg','images/mm/mm4.jpg','images/mm/mm5.jpg',
+			'images/mm/mm6.jpg','images/mm/mm7.jpg','images/mm/mm8.jpg','images/mm/mm9.jpg','images/mm/mm10.jpg'];
+				var li = '';
+				for (var i = 0; i < img_list.length; i++) {
+					li += '<li><img src="' + img_list[i] + '"></li>';
+				}
+				$(".imgBox").html(li);
+				var li = $('.warp').find('li');
+				var warp = {
+					random: function(low, up) {
+						return Math.floor((Math.random() * (low - up)) + up);
+					},
+					css: function() {
+						var rotate = this.random(-20, 20),
+							zindex = this.random(0, li.length),
+							degrees = 'rotate(' + rotate + 'deg)';
+						return {
+							'degrees': degrees,
+							'zindex': zindex
+						}
+					},
+					degrees: function(element) {
+						var random = this.css();
+						$(element).css({
+							'-webkit-transform': random.degrees,
+							'-moz-transform': random.degrees,
+							'-o-transform': random.degrees,
+							'z-index': random.zindex
+						});
+					},
+					animate: function(element, x, y) {
+						$(element).animate({
+							top: y,
+							left: x
+						}, 500);
+					}
+				}
+				li.each(function() {
+					warp.degrees($(this));
+					var t = $(this),
+						x = warp.random(-600, 600),
+						y = warp.random(-300, 300);
+					warp.animate(t, x, y);
+					warp.degrees(t);
+				});
+			});
+		</script>
+	</body>
+</html>
